@@ -1,0 +1,19 @@
+---
+- import_tasks: install_firewalld.yml
+- import_tasks: configure_splunk_common_ports.yml
+- import_tasks: configure_splunk_search_head_cluster_ports.yml
+  when: inventory_hostname in groups['search_heads']
+- import_tasks: configure_splunk_indexer_cluster_ports.yml
+  when: inventory_hostname in groups['indexers']
+- import_tasks: configure_splunk_deployment_server_ports.yml
+  when: inventory_hostname in groups['deployment_server']
+- import_tasks: configure_splunk_heavy_forwarder_ports.yml
+  when: inventory_hostname in groups['heavy_forwarders']
+- import_tasks: configure_splunk_license_manager.yml
+  when: inventory_hostname in groups['license_manager']
+- import_tasks: configure_splunk_universal_forwarder_ports.yml
+  when: inventory_hostname in groups['universal_forwarders']
+- import_tasks: configure_splunk_cluster_manager_ports.yml
+  when: inventory_hostname in groups['cluster_manager']
+- import_tasks: configure_splunk_deployer_ports.yml
+  when: inventory_hostname in groups['deployer']

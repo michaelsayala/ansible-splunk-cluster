@@ -1,0 +1,7 @@
+---
+- name: Universal Forwarder - Download Splunk Forwarder package from official source
+  ansible.builtin.get_url:
+    url: https://download.splunk.com/products/universalforwarder/releases/{{ splunk_uf_version }}/linux/{{
+      splunk_uf_package }}
+    dest: "{{ splunk_uf_download_location }}/{{ splunk_uf_package }}"
+    mode: "0644"

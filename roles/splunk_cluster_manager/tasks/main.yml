@@ -1,0 +1,23 @@
+---
+- name: Cluster Manager - Deploy server.conf for clustering
+  ansible.builtin.template:
+    src: server.conf.j2
+    dest: "{{ splunk_home }}/etc/system/local/server.conf"
+    owner: splunk
+    group: splunk
+    mode: "0644"
+  notify:
+    - Restart Splunk
+
+- name: Cluster Manager - Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Cluster Manager - Wait for Splunk Management Port
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: wait_for_splunk_management_port.yml
+
+- name: Cluster Manager - Wait for Splunk REST API
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: wait_for_splunk_rest_api.yml

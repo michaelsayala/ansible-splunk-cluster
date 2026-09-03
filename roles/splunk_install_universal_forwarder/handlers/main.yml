@@ -1,0 +1,6 @@
+---
+- name: Restart Universal Forwarder
+  ansible.builtin.systemd:
+    name: SplunkForwarder
+    state: restarted
+    daemon_reload: true

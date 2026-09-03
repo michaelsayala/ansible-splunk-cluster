@@ -1,0 +1,19 @@
+---
+- name: Search Head Cluster - Configure Search Head
+  ansible.builtin.import_tasks: config.yml
+
+- name: Search Head Cluster - Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Search Head Cluster - Wait for Splunk Management Port
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: wait_for_splunk_management_port.yml
+
+- name: Search Head Cluster - Wait for Splunk REST API
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: wait_for_splunk_rest_api.yml
+
+- name: Search Head Cluster - Bootstrap captain
+  ansible.builtin.import_tasks: bootstrap.yml

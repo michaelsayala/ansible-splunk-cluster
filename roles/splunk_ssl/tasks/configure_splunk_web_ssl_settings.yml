@@ -1,0 +1,22 @@
+---
+- name: Splunk SSL Web - Configure SSL settings (web.conf)
+  ansible.builtin.template:
+    src: web.conf.j2
+    dest: "{{ splunk_home }}/etc/system/local/web.conf"
+    owner: splunk
+    group: splunk
+    mode: "0644"
+  notify: Restart Splunk
+
+- name: Splunk SSL Web - Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Splunk SSL Web - Wait for Splunk Management Port
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: wait_for_splunk_management_port.yml
+
+- name: Splunk SSL Web - Wait for Splunk REST API
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: wait_for_splunk_rest_api.yml

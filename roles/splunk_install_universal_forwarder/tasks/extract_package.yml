@@ -1,0 +1,9 @@
+---
+- name: Universal Forwarder - Extract installation package
+  ansible.builtin.unarchive:
+    src: "{{ splunk_uf_download_location }}/{{ splunk_uf_package }}"
+    dest: /opt
+    remote_src: yes
+    owner: "{{ splunk_uf_user }}"
+    group: "{{ splunk_uf_group }}"
+    creates: "{{ splunk_uf_home }}/bin/splunk"

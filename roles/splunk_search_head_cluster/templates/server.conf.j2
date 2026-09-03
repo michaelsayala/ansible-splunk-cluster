@@ -1,0 +1,9 @@
+[replication_port://{{ splunk_shc_replication_port }}]
+
+[shclustering]
+conf_deploy_fetch_url = https://{{ hostvars['dp1']['private_ip'] }}:8089
+disabled = 0
+mgmt_uri = https://{{ hostvars[inventory_hostname]['private_ip'] }}:8089
+pass4SymmKey = {{ splunk_shc_secret }}
+shcluster_label = {{ splunk_shc_label }}
+replication_factor = {{ splunk_shc_replication_number }}

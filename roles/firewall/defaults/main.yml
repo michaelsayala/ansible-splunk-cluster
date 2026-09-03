@@ -1,0 +1,32 @@
+---
+splunk_common_firewall_ports:
+  - 8089/tcp
+
+splunk_indexer_cluster_ports:
+  - 8000/tcp
+  - 9887/tcp
+  - 9997/tcp
+
+splunk_search_head_cluster_ports:
+  - 8000/tcp
+  - 9000/tcp
+  - 8191/tcp
+
+splunk_heavy_forwarder_ports:
+  - 8000/tcp
+  - 9997/tcp
+
+splunk_cluster_manager_ports:
+  - 8000/tcp
+
+splunk_deployer_ports:
+  - 8000/tcp
+
+splunk_license_manager_ports:
+  - 8000/tcp
+
+splunk_deployment_server_ports:
+  - 8000/tcp
+
+splunk_universal_forwarder_ports:
+  - 9997/tcp

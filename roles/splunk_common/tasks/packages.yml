@@ -1,0 +1,9 @@
+---
+- name: OS - Install required system packages for Splunk
+  ansible.builtin.yum:
+    name:
+      - net-tools
+      - wget
+      - ntpstat
+      - telnet
+    state: present

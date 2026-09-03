@@ -1,0 +1,6 @@
+---
+- import_tasks: download_package.yml
+- import_tasks: extract_package.yml
+- import_tasks: configure_user_seed.yml
+- import_tasks: initialize_splunk.yml
+- import_tasks: boot_start.yml

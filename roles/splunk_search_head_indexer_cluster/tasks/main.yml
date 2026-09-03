@@ -1,0 +1,24 @@
+---
+- name: Search Head Cluster - Configure indexer cluster connection
+  ansible.builtin.blockinfile:
+    path: "{{ splunk_home }}/etc/system/local/server.conf"
+    marker: "# {mark} ANSIBLE MANAGED INDEXER CLUSTER"
+    block: "{{ lookup('template', 'server.conf.j2') }}"
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    mode: "0644"
+  notify:
+    - Restart Splunk
+
+- name: Search Head Cluster - Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Search Head Cluster - Wait for Splunk Management Port
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: wait_for_splunk_management_port.yml
+
+- name: Search Head Cluster - Wait for Splunk REST API
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: wait_for_splunk_rest_api.yml

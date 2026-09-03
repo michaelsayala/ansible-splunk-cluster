@@ -1,0 +1,31 @@
+---
+- name: Indexer Cluster Discovery - Create configuration app directory
+  ansible.builtin.file:
+    path: "{{ splunk_home }}/etc/apps/cm_config/local"
+    state: directory
+    owner: splunk
+    group: splunk
+    mode: "0755"
+
+- name: Indexer Cluster Discovery - Deploy server.conf app configuration
+  ansible.builtin.template:
+    src: server.conf.j2
+    dest: "{{ splunk_home }}/etc/apps/cm_config/local/server.conf"
+    owner: splunk
+    group: splunk
+    mode: "0644"
+  notify:
+    - Restart Splunk
+
+- name: Indexer Cluster Discovery - Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Indexer Cluster Discovery - Wait for Splunk Management Port
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: wait_for_splunk_management_port.yml
+
+- name: Indexer Cluster Discovery - Wait for Splunk REST API
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: wait_for_splunk_rest_api.yml

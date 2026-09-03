@@ -1,0 +1,110 @@
+all:
+  vars:
+    # SSH username used to connect to all Splunk servers
+    ansible_user: CHANGE_ME
+
+    # Path to the SSH private key on the Ansible control machine
+    ansible_ssh_private_key_file: CHANGE_ME
+
+  children:
+
+    # Splunk Cluster Manager
+    cluster_manager:
+      hosts:
+        cm1:
+          ansible_host: CHANGE_ME_PUBLIC_IP
+          private_ip: CHANGE_ME_PRIVATE_IP
+
+    # Splunk Indexers
+    indexers:
+      hosts:
+        idx1:
+          ansible_host: CHANGE_ME_PUBLIC_IP
+          private_ip: CHANGE_ME_PRIVATE_IP
+
+        idx2:
+          ansible_host: CHANGE_ME_PUBLIC_IP
+          private_ip: CHANGE_ME_PRIVATE_IP
+
+        idx3:
+          ansible_host: CHANGE_ME_PUBLIC_IP
+          private_ip: CHANGE_ME_PRIVATE_IP
+
+    # Splunk Search Head Deployer
+    deployer:
+      hosts:
+        dp1:
+          ansible_host: CHANGE_ME_PUBLIC_IP
+          private_ip: CHANGE_ME_PRIVATE_IP
+
+    # Splunk Search Heads
+    search_heads:
+      hosts:
+        sh1:
+          ansible_host: CHANGE_ME_PUBLIC_IP
+          private_ip: CHANGE_ME_PRIVATE_IP
+
+        sh2:
+          ansible_host: CHANGE_ME_PUBLIC_IP
+          private_ip: CHANGE_ME_PRIVATE_IP
+
+        sh3:
+          ansible_host: CHANGE_ME_PUBLIC_IP
+          private_ip: CHANGE_ME_PRIVATE_IP
+
+    # Splunk Deployment Server
+    deployment_server:
+      hosts:
+        ds1:
+          ansible_host: CHANGE_ME_PUBLIC_IP
+          private_ip: CHANGE_ME_PRIVATE_IP
+
+    # Splunk License Manager
+    license_manager:
+      hosts:
+        lm1:
+          ansible_host: CHANGE_ME_PUBLIC_IP
+          private_ip: CHANGE_ME_PRIVATE_IP
+
+    # Splunk Heavy Forwarders
+    heavy_forwarders:
+      hosts:
+        hf1:
+          ansible_host: CHANGE_ME_PUBLIC_IP
+          private_ip: CHANGE_ME_PRIVATE_IP
+
+        hf2:
+          ansible_host: CHANGE_ME_PUBLIC_IP
+          private_ip: CHANGE_ME_PRIVATE_IP
+
+    # Splunk Universal Forwarders
+    universal_forwarders:
+      hosts:
+        uf1:
+          ansible_host: CHANGE_ME_PUBLIC_IP
+          private_ip: CHANGE_ME_PRIVATE_IP
+
+        uf2:
+          ansible_host: CHANGE_ME_PUBLIC_IP
+          private_ip: CHANGE_ME_PRIVATE_IP
+
+    # Hosts that participate as license peers
+    license_peers:
+      children:
+        cluster_manager:
+        indexers:
+        search_heads:
+        deployer:
+        heavy_forwarders:
+        deployment_server:
+
+    # All Splunk Enterprise hosts
+    splunk_enterprise:
+      children:
+        cluster_manager:
+        indexers:
+        search_heads:
+        deployer:
+        heavy_forwarders:
+        deployment_server:
+        license_manager:

@@ -1,0 +1,19 @@
+---
+- name: Splunk - Ensure system local configuration directory exists
+  ansible.builtin.file:
+    path: "{{ splunk_home }}/etc/system/local"
+    state: directory
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    mode: '0755'
+
+- name: Splunk - Configure administrator credentials (user-seed)
+  ansible.builtin.template:
+    src: user-seed.conf.j2
+    dest: "{{ splunk_home }}/etc/system/local/user-seed.conf"
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    mode: '0600'
+  no_log: true
+  notify:
+    - Restart Splunk

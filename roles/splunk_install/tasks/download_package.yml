@@ -1,0 +1,7 @@
+---
+- name: Splunk - Download enterprise package from official source
+  ansible.builtin.get_url:
+    url: https://download.splunk.com/products/splunk/releases/{{ splunk_version }}/linux/{{
+      splunk_package }}
+    dest: "{{ splunk_download_location }}/{{ splunk_package }}"
+    mode: "0644"

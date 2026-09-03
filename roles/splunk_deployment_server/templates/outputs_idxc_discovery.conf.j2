@@ -1,0 +1,12 @@
+[indexer_discovery:idxc_discovery]
+master_uri = https://{{ hostvars['cm1']['private_ip'] }}:8089
+pass4SymmKey = {{ splunk_idxc_discovery_secret }}
+
+[tcpout]
+defaultGroup = idx_cluster
+
+[tcpout:idx_cluster]
+indexerDiscovery = idxc_discovery
+useACK = true
+compressed = true
+autoLBFrequency = 30

@@ -1,0 +1,9 @@
+---
+- name: Splunk - Extract installation package
+  ansible.builtin.unarchive:
+    src: "{{ splunk_download_location }}/{{ splunk_package }}"
+    dest: /opt
+    remote_src: yes
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    creates: "{{ splunk_home }}/bin/splunk"

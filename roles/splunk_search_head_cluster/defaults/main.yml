@@ -1,0 +1,4 @@
+---
+splunk_shc_label: shc_site1
+splunk_shc_replication_port: 9000
+splunk_shc_replication_number: 3

@@ -1,0 +1,4 @@
+---
+splunk_idxc_replication_factor: 3
+splunk_idxc_search_factor: 2
+splunk_idxc_label: splunk_cluster_master

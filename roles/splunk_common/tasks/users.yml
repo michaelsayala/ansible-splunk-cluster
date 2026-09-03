@@ -1,0 +1,24 @@
+---
+- name: OS - Create Splunk system group
+  ansible.builtin.group:
+    name: '{{ splunk_group }}'
+    state: present
+    system: true
+
+- name: OS - Create Splunk service user
+  ansible.builtin.user:
+    name: '{{ splunk_user }}'
+    group: '{{ splunk_group }}'
+    create_home: true
+    home: /home/{{ splunk_user }}
+    shell: /bin/bash
+    system: true
+    state: present
+
+- name: OS - Create Splunk installation directory
+  ansible.builtin.file:
+    path: '{{ splunk_home }}'
+    state: directory
+    owner: '{{ splunk_user }}'
+    group: '{{ splunk_group }}'
+    mode: '0755'

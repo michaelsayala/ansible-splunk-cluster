@@ -1,0 +1,18 @@
+---
+- name: Universal Forwarder - Enable boot-start using systemd
+  ansible.builtin.command: >
+    {{ splunk_uf_home }}/bin/splunk enable boot-start
+    -systemd-managed 1
+    -user {{ splunk_uf_user }}
+  become: true
+  when: not splunk_uf_service.stat.exists
+
+- name: Universal Forwarder - Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Universal Forwarder - Start service
+  ansible.builtin.systemd:
+    name: SplunkForwarder
+    state: started
+    enabled: true

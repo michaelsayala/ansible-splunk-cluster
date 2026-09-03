@@ -1,0 +1,8 @@
+[tcpout]
+defaultGroup = heavy_forwarders
+
+[tcpout:heavy_forwarders]
+server = {{ groups['heavy_forwarders'] | map('extract', hostvars, 'private_ip') | map('regex_replace', '$', ':9997') | join(',') }}
+useACK = true
+compressed = true
+autoLBFrequency = 30

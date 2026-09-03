@@ -1,0 +1,10 @@
+---
+- name: Firewall - Allow Splunk Deployment Server ports
+  ansible.posix.firewalld:
+    port: "{{ item }}"
+    permanent: true
+    state: enabled
+    immediate: true
+  loop: "{{ splunk_deployment_server_ports }}"
+  notify:
+    - Reload firewalld

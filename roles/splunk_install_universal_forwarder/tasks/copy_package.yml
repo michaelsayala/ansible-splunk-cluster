@@ -1,0 +1,13 @@
+- name: Universal Forwarder - Ensure /tmp directory exists for package staging
+  ansible.builtin.file:
+    path: /tmp
+    state: directory
+    mode: '0755'
+
+- name: Universal Forwarder - Copy installation package to target server
+  ansible.builtin.copy:
+    src: "{{ splunk_uf_package }}"
+    dest: "/tmp/{{ splunk_uf_package }}"
+    owner: root
+    group: root
+    mode: "0644"

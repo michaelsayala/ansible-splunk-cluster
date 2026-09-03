@@ -1,0 +1,53 @@
+# =========================================================
+# Splunk Package Configuration
+# =========================================================
+
+# Splunk version to install
+splunk_version: "9.4.10"
+
+# Splunk installation package filename
+splunk_package: "splunk-9.4.10-3673ab0c12ee-linux-amd64.tgz"
+
+# Location where the Splunk package will be downloaded/staged
+splunk_download_location: "/tmp"
+
+
+# =========================================================
+# Splunk Installation Configuration
+# =========================================================
+
+# Splunk installation directory
+splunk_home: "/opt/splunk"
+
+# Linux user that owns the Splunk installation
+splunk_user: "splunk"
+
+# Linux group that owns the Splunk installation
+splunk_group: "splunk"
+
+
+# =========================================================
+# Splunk Authentication Configuration
+# =========================================================
+
+# Initial Splunk administrator username
+splunk_admin_user: "admin"
+
+# IMPORTANT:
+# Do NOT put the real password in this file if this file
+# will be shared or committed to Git.
+splunk_admin_password: "CHANGE_ME_USE_ANSIBLE_VAULT"
+
+
+# =========================================================
+# Splunk Cluster Secrets
+# =========================================================
+
+# Search Head Cluster secret
+splunk_shc_secret: "CHANGE_ME_USE_ANSIBLE_VAULT"
+
+# Indexer Cluster secret
+splunk_idxc_secret: "CHANGE_ME_USE_ANSIBLE_VAULT"
+
+# Indexer Discovery secret
+splunk_idxc_discovery_secret: "CHANGE_ME_USE_ANSIBLE_VAULT"

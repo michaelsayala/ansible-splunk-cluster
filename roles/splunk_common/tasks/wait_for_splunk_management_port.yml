@@ -1,0 +1,7 @@
+---
+- name: Wait for Splunk Management Port
+  ansible.builtin.wait_for:
+    host: "{{ ansible_host }}"
+    port: 8089
+    delay: 5
+    timeout: 300

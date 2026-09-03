@@ -1,0 +1,39 @@
+---
+# =========================================================
+# Universal Forwarder Package Configuration
+# =========================================================
+
+# Universal Forwarder version to install
+splunk_uf_version: "9.4.10"
+
+# Universal Forwarder installation package filename
+splunk_uf_package: "splunkforwarder-9.4.10-3673ab0c12ee-linux-amd64.tgz"
+
+# Location where the package will be downloaded/staged
+splunk_uf_download_location: "/tmp"
+
+
+# =========================================================
+# Universal Forwarder Installation Configuration
+# =========================================================
+
+# Universal Forwarder installation directory
+splunk_uf_home: "/opt/splunkforwarder"
+
+# Linux user that owns the Universal Forwarder installation
+splunk_uf_user: "splunkfwd"
+
+# Linux group that owns the Universal Forwarder installation
+splunk_uf_group: "splunkfwd"
+
+
+# =========================================================
+# Universal Forwarder Authentication Configuration
+# =========================================================
+
+# Initial Universal Forwarder administrator username
+splunk_uf_admin_user: "admin"
+
+# IMPORTANT:
+# Do not put the real password in this shared file.
+splunk_uf_admin_password: "CHANGE_ME_USE_ANSIBLE_VAULT"

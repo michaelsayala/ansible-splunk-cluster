@@ -1,0 +1,14 @@
+---
+- name: Universal Forwarder - Install OS required system packages for Splunk
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: packages.yml
+- name: Universal Forwarder - Configure OS system hostname
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: hostname.yml
+- import_tasks: download_package.yml
+- import_tasks: user.yml
+- import_tasks: install.yml
+- import_tasks: boot_start.yml
+- import_tasks: deployment_client.yml

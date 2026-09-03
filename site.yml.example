@@ -1,0 +1,232 @@
+---
+# ============================================================
+# 1. Install Splunk Enterprise
+# ============================================================
+- name: Install Splunk Enterprise
+  hosts: splunk_enterprise
+  become: true
+
+  roles:
+    - splunk_common
+    - splunk_install
+
+
+# ============================================================
+# 2. Configure /etc/hosts
+# ============================================================
+- name: Configure /etc/hosts for Splunk cluster
+  hosts: splunk_enterprise
+  become: true
+
+  roles:
+    - splunk_hosts_file
+
+
+# ============================================================
+# 3. Configure Splunk Web HTTPS / SSL
+# ============================================================
+- name: Splunk Web - Enable HTTPS (SSL configuration)
+  hosts: splunk_enterprise
+  become: true
+
+  roles:
+    - splunk_ssl
+
+
+# ============================================================
+# 4. Configure Firewall
+# ============================================================
+- name: Configure Splunk firewall ports
+  hosts: all
+  become: true
+
+  roles:
+    - firewall
+
+
+# ============================================================
+# 5. Configure License Manager
+# ============================================================
+- name: Configure Splunk License Manager
+  hosts: license_manager
+  become: true
+
+  roles:
+    - splunk_license_manager
+
+
+# ============================================================
+# 6. Configure License Peers
+# ============================================================
+- name: Configure Splunk License Peers
+  hosts: license_peers
+  become: true
+
+  roles:
+    - splunk_license_peer
+
+
+# ============================================================
+# 7. Configure Cluster Manager
+# ============================================================
+- name: Configure Splunk Cluster Manager
+  hosts: cluster_manager
+  become: true
+
+  roles:
+    - splunk_cluster_manager
+
+
+# ============================================================
+# 8. Configure Indexer Cluster
+# ============================================================
+- name: Configure Splunk Indexer Cluster
+  hosts: indexers
+  become: true
+
+  roles:
+    - splunk_indexer_cluster
+    - splunk_indexer_receiving
+
+
+# ============================================================
+# 9. Configure Search Head Deployer
+# ============================================================
+- name: Configure Splunk Deployer
+  hosts: deployer
+  become: true
+
+  roles:
+    - splunk_deployer
+
+
+# ============================================================
+# 10. Configure Search Head Cluster
+# ============================================================
+- name: Configure Splunk Search Head Cluster
+  hosts: search_heads
+  become: true
+
+  roles:
+    - splunk_search_head_cluster
+
+
+# ============================================================
+# 11. Connect Search Heads to Indexer Cluster
+# ============================================================
+- name: Connect Search Heads to Indexer Cluster
+  hosts: search_heads
+  become: true
+
+  roles:
+    - splunk_search_head_indexer_cluster
+
+
+# ============================================================
+# 12. Configure Indexer Discovery
+# ============================================================
+- name: Configure Indexer Discovery in Cluster Manager
+  hosts: cluster_manager
+  become: true
+
+  roles:
+    - splunk_indexer_cluster_discovery
+
+
+# ============================================================
+# 13. Configure Deployment Server
+# ============================================================
+- name: Configure Splunk Deployment Server
+  hosts: deployment_server
+  become: true
+
+  roles:
+    - splunk_deployment_server
+
+
+# ============================================================
+# 14. Configure SHC Outputs App
+# ============================================================
+- name: Deploy Search Head Cluster Outputs App
+  hosts: deployer
+  become: true
+
+  roles:
+    - splunk_shc_outputs_idxc_discovery
+
+
+# ============================================================
+# 15. Configure Heavy Forwarder Receiving
+# ============================================================
+- name: Configure Splunk Heavy Forwarder Receiving Data
+  hosts: heavy_forwarders
+  become: true
+
+  roles:
+    - splunk_indexer_receiving
+
+
+# ============================================================
+# 16. Configure Heavy Forwarder Outputs
+# ============================================================
+- name: Configure Splunk Heavy Forwarder Outputs App
+  hosts: heavy_forwarders
+  become: true
+
+  roles:
+    - splunk_all_outputs_idxc_discovery
+
+
+# ============================================================
+# 17. Configure License Manager Outputs
+# ============================================================
+- name: Configure Splunk License Manager Outputs App
+  hosts: license_manager
+  become: true
+
+  roles:
+    - splunk_all_outputs_idxc_discovery
+
+
+# ============================================================
+# 18. Configure Deployment Server Outputs
+# ============================================================
+- name: Configure Splunk Deployment Server Outputs App
+  hosts: deployment_server
+  become: true
+
+  roles:
+    - splunk_all_outputs_idxc_discovery
+
+
+# ============================================================
+# 19. Configure Cluster Manager Outputs
+# ============================================================
+- name: Configure Splunk Cluster Manager Outputs App
+  hosts: cluster_manager
+  become: true
+
+  roles:
+    - splunk_all_outputs_idxc_discovery
+
+
+# ============================================================
+# 20. Configure Deployer Outputs
+# ============================================================
+- name: Configure Splunk Deployer Outputs App
+  hosts: deployer
+  become: true
+
+  roles:
+    - splunk_all_outputs_idxc_discovery
+
+
+# ============================================================
+# 21. Install Universal Forwarder
+# ============================================================
+- name: Install Splunk Forwarder
+  hosts: universal_forwarders
+  become: true
+
+  roles:
+    - splunk_universal_forwarder_install

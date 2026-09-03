@@ -1,0 +1,27 @@
+---
+- name: OS - Create systemd override directory
+  ansible.builtin.file:
+    path: /etc/systemd/system/Splunkd.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: OS - Configure systemd limits for Splunk
+  ansible.builtin.template:
+    src: override.conf.j2
+    dest: /etc/systemd/system/Splunkd.service.d/override.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload systemd
+    - Restart Splunk
+
+- name: OS - Configure login session limits
+  ansible.builtin.template:
+    src: 99-splunk.conf.j2
+    dest: /etc/security/limits.d/99-splunk.conf
+    owner: root
+    group: root
+    mode: "0644"

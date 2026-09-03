@@ -1,0 +1,3 @@
+---
+- import_tasks: configure_splunk_web_ssl_certificates.yml
+- import_tasks: configure_splunk_web_ssl_settings.yml

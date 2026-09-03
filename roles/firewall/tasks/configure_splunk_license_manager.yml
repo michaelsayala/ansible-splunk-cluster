@@ -1,0 +1,10 @@
+---
+- name: Firewall - Allow Splunk License Manager ports
+  ansible.posix.firewalld:
+    port: "{{ item }}"
+    permanent: true
+    state: enabled
+    immediate: true
+  loop: "{{ splunk_license_manager_ports }}"
+  notify:
+    - Reload firewalld

@@ -1,0 +1,20 @@
+---
+- name: Splunk - Check systemd service existence
+  ansible.builtin.stat:
+    path: /etc/systemd/system/Splunkd.service
+  register: splunkd_service
+
+- name: Splunk - Start service and accept license
+  ansible.builtin.command: >
+    {{ splunk_home }}/bin/splunk start
+    --accept-license
+    --answer-yes
+    --no-prompt
+  become: true
+  when: not splunkd_service.stat.exists
+
+- name: Splunk - Stop service after initialization
+  ansible.builtin.command: >
+    {{ splunk_home }}/bin/splunk stop
+  become: true
+  when: not splunkd_service.stat.exists

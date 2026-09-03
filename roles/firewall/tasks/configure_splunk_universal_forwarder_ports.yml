@@ -1,0 +1,10 @@
+---
+- name: Firewall - Allow Splunk Universal Forwarder ports
+  ansible.posix.firewalld:
+    port: "{{ item }}"
+    permanent: true
+    state: enabled
+    immediate: true
+  loop: "{{ splunk_universal_forwarder_ports }}"
+  notify:
+    - Reload firewalld

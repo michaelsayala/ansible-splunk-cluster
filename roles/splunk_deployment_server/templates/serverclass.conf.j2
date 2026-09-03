@@ -1,0 +1,12 @@
+[global]
+repositoryLocation = {{ splunk_deployment_apps_dir }}
+
+[serverClass:sc_global_outputs_idxc_discovery]
+whitelist.0 = uf*
+
+[serverClass:sc_global_outputs_idxc_discovery:app:global_outputs_idxc_discovery]
+
+[serverClass:sc_global_outputs_hf]
+whitelist.0 = app-*
+
+[serverClass:sc_global_outputs_hf:app:global_outputs_hf]

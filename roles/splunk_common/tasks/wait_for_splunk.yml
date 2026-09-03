@@ -1,0 +1,20 @@
+---
+- name: Wait for Splunk Management Port
+  ansible.builtin.wait_for:
+    host: "{{ ansible_host }}"
+    port: 8089
+    delay: 5
+    timeout: 300
+
+- name: Wait for Splunk REST API
+  ansible.builtin.uri:
+    url: "https://{{ ansible_host }}:8089/services/server/info?output_mode=json"
+    method: GET
+    user: "{{ splunk_admin_user }}"
+    password: "{{ splunk_admin_password }}"
+    validate_certs: false
+    status_code: 200
+  register: splunk_api
+  until: splunk_api.status == 200
+  retries: 30
+  delay: 10

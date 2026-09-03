@@ -1,0 +1,77 @@
+# Ansible
+*.retry
+*.log
+.ansible/
+.cache/
+
+# Ansible Vault
+.vault_pass
+vault_password
+vault-password
+vault-pass
+
+# Secrets and credentials
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+
+# SSH
+.ssh/
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Splunk License
+*.License
+
+# Splunk Installers
+*.tgz
+*.tar.gz
+*.deb
+*.rpm
+*.msi
+*.pkg
+
+# Splunk installation packages
+splunk-*.tgz
+splunk-*.tar.gz
+splunk-*.deb
+splunk-*.rpm
+splunk-*.msi
+splunk-*.pkg
+
+# Local variable files containing secrets
+group_vars/*/vault.yml
+
+# Local inventory and site configuration
+inventory.yml
+site.yml
+all.yml

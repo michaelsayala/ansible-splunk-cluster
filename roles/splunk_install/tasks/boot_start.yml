@@ -1,0 +1,35 @@
+- name: Splunk - Enable boot-start using systemd
+  ansible.builtin.command: >
+    {{ splunk_home }}/bin/splunk enable boot-start
+    -systemd-managed 1
+    -user {{ splunk_user }}
+  become: true
+  when: not splunkd_service.stat.exists
+  register: bootstart_result
+
+- name: OS - Set ownership for Splunk var directory
+  ansible.builtin.file:
+    path: "{{ splunk_home }}/var"
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    recurse: yes
+  when: bootstart_result.changed
+
+- name: OS - Set ownership for Splunk etc directory
+  ansible.builtin.file:
+    path: "{{ splunk_home }}/etc"
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    recurse: yes
+  when: bootstart_result.changed
+
+- name: SystemD - Reload daemon configuration
+  ansible.builtin.systemd_service:
+    daemon_reload: true 
+  when: bootstart_result.changed
+
+- name: SystemD - Enable and start Splunk service
+  ansible.builtin.systemd_service:
+    name: Splunkd
+    enabled: true
+    state: started

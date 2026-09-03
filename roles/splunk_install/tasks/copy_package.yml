@@ -1,0 +1,11 @@
+- name: OS - Ensure /tmp directory exists for package staging
+  ansible.builtin.file:
+    path: /tmp
+    state: directory
+    mode: '0755'
+
+- name: Splunk - Copy installation package to target server
+  ansible.builtin.copy:
+    src: files/{{ splunk_package }}
+    dest: /tmp/{{ splunk_package }}
+    mode: preserve

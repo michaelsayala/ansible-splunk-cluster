@@ -1,0 +1,44 @@
+---
+- name: License Manager - Ensure license directory exists
+  ansible.builtin.file:
+    path: "{{ splunk_license_path }}"
+    state: directory
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    mode: "0755"
+
+- name: License Manager - Copy Splunk license file
+  ansible.builtin.copy:
+    src: "files/{{ splunk_license_file }}"
+    dest: "{{ splunk_license_path }}/{{ splunk_license_file }}"
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    mode: "0644"
+  register: splunk_license_copy
+
+- name: License Manager - Install Splunk license
+  ansible.builtin.command: >
+    {{ splunk_home }}/bin/splunk add licenses
+    {{ splunk_license_path }}/{{ splunk_license_file }}
+    -auth {{ splunk_admin_user }}:{{ splunk_admin_password }}
+  register: splunk_license_install
+  when: splunk_license_copy.changed
+  changed_when: splunk_license_install.rc == 0
+  failed_when:
+    - splunk_license_install.rc != 0
+    - "'stack already has license' not in splunk_license_install.stderr"
+  notify:
+    - Restart Splunk
+
+- name: License Manager - Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: License Manager - Wait for Splunk Management Port
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: wait_for_splunk_management_port.yml
+
+- name: License Manager - Wait for Splunk REST API
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: wait_for_splunk_rest_api.yml

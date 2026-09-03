@@ -1,0 +1,39 @@
+---
+- name: SHC - Check cluster status
+  ansible.builtin.command: >
+    {{ splunk_home }}/bin/splunk show shcluster-status
+    -auth {{ splunk_admin_user }}:{{ splunk_admin_password }}
+  delegate_to: "{{ groups['search_heads'][0] }}"
+  run_once: true
+  register: shc_status
+  changed_when: false
+  failed_when: false
+
+- name: SHC - Build cluster server list
+  ansible.builtin.set_fact:
+    shc_servers: >-
+      {% for host in groups['search_heads'] -%}
+      https://{{ hostvars[host]['private_ip'] }}:8089{% if not loop.last %},{% endif %}
+      {%- endfor %}
+
+- name: SHC - Bootstrap captain
+  ansible.builtin.command: >
+    {{ splunk_home }}/bin/splunk bootstrap shcluster-captain
+    -servers_list "{{ shc_servers }}"
+    -auth {{ splunk_admin_user }}:{{ splunk_admin_password }}
+  delegate_to: "{{ groups['search_heads'][0] }}"
+  run_once: true
+  register: shc_bootstrap
+  when:
+    - "'This node is not part of any cluster configuration' in shc_status.stderr"
+  changed_when: true
+
+- name: SHC - Display bootstrap result
+  ansible.builtin.debug:
+    msg: >-
+      {{
+        shc_bootstrap.stdout
+        if shc_bootstrap is defined and shc_bootstrap.stdout is defined
+        else 'SHC is already initialized. Bootstrap skipped.'
+      }}
+  run_once: true

@@ -1,0 +1,18 @@
+---
+- name: Create Splunk outputs app directory
+  ansible.builtin.file:
+    path: "{{ splunk_home }}/etc/apps/splunk_outputs_idxc_discovery/local"
+    state: directory
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    mode: "0755"
+
+- name: Splunk - Deploy outputs.conf
+  ansible.builtin.template:
+    src: outputs.conf.j2
+    dest: "{{ splunk_home }}/etc/apps/splunk_outputs_idxc_discovery/local/outputs.conf"
+    owner: splunk
+    group: splunk
+    mode: "0644"
+  notify:
+    - Restart Splunk

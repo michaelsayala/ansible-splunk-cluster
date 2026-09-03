@@ -1,0 +1,59 @@
+---
+- name: Deployment Server - Create Indexer Discovery app directory
+  ansible.builtin.file:
+    path: "{{ splunk_deployment_apps_dir }}/global_outputs_idxc_discovery/local"
+    state: directory
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    mode: "0755"
+
+- name: Deployment Server - Create Heavy Forwarder app directory
+  ansible.builtin.file:
+    path: "{{ splunk_deployment_apps_dir }}/global_outputs_hf/local"
+    state: directory
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    mode: "0755"
+
+- name: Deployment Server - Configure Indexer Discovery outputs
+  ansible.builtin.template:
+    src: outputs_idxc_discovery.conf.j2
+    dest: "{{ splunk_deployment_apps_dir }}/global_outputs_idxc_discovery/local/outputs.conf"
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    mode: "0644"
+  notify:
+    - Restart Splunk
+
+- name: Deployment Server - Configure Heavy Forwarder outputs
+  ansible.builtin.template:
+    src: outputs_hf.conf.j2
+    dest: "{{ splunk_deployment_apps_dir }}/global_outputs_hf/local/outputs.conf"
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    mode: "0644"
+  notify:
+    - Restart Splunk
+
+- name: Deployment Server - Configure server classes
+  ansible.builtin.template:
+    src: serverclass.conf.j2
+    dest: "{{ splunk_home }}/etc/system/local/serverclass.conf"
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    mode: "0644"
+  notify:
+    - Restart Splunk
+
+- name: Deployment Server - Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Deployment Server - Wait for Splunk Management Port
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: wait_for_splunk_management_port.yml
+
+- name: Deployment Server - Wait for Splunk REST API
+  ansible.builtin.include_role:
+    name: splunk_common
+    tasks_from: wait_for_splunk_rest_api.yml

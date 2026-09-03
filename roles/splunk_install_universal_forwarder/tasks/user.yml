@@ -1,0 +1,16 @@
+---
+- name: Universal Forwarder - Create Splunk group
+  ansible.builtin.group:
+    name: "{{ splunk_uf_group }}"
+    system: true
+    state: present
+
+- name: Universal Forwarder - Create Splunk user
+  ansible.builtin.user:
+    name: "{{ splunk_uf_user }}"
+    group: "{{ splunk_uf_group }}"
+    system: true
+    shell: /sbin/nologin
+    home: "{{ splunk_uf_home }}"
+    create_home: false
+    state: present

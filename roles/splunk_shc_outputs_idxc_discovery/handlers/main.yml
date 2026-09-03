@@ -1,0 +1,9 @@
+---
+- name: Apply SHC Bundle
+  ansible.builtin.command: >
+    {{ splunk_home }}/bin/splunk apply shcluster-bundle
+    -target https://{{ hostvars['sh1']['private_ip'] }}:8089
+    -auth {{ splunk_admin_user }}:{{ splunk_admin_password }}
+    --answer-yes
+  register: shc_apply
+  changed_when: true
