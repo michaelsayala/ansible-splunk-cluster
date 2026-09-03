@@ -668,10 +668,11 @@ Potential improvements include:
 
 ---
 
-# License
+## License
 
-Add the project's chosen open-source license here.
+This project is licensed under the MIT License.
 
+See the [LICENSE](LICENSE) file for the full license text.
 ---
 
 # Author
