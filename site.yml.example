@@ -229,4 +229,4 @@
   become: true
 
   roles:
-    - splunk_universal_forwarder_install
+    - splunk_install_universal_forwarder
