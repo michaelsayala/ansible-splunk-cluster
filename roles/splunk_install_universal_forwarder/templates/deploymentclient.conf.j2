@@ -1,7 +1,5 @@
 [deployment-client]
+clientName = {{ inventory_hostname }}
 
 [target-broker:deploymentServer]
 targetUri = {{ hostvars['ds1']['private_ip'] }}:8089
-
-[deployment-client]
-clientName = {{ inventory_hostname }}
