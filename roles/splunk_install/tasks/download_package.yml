@@ -4,4 +4,6 @@
     url: https://download.splunk.com/products/splunk/releases/{{ splunk_version }}/linux/{{
       splunk_package }}
     dest: "{{ splunk_download_location }}/{{ splunk_package }}"
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
     mode: "0644"

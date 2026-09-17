@@ -1,10 +1,10 @@
 ---
-- name: OS - Install firewalld package
+- name: Firewall - Install firewalld package
   ansible.builtin.package:
     name: firewalld
     state: present
 
-- name: System - Ensure firewalld service is enabled and running
+- name: Firewall - Ensure firewalld service is enabled and running
   ansible.builtin.service:
     name: firewalld
     state: started

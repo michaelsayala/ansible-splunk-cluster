@@ -10,7 +10,7 @@
     - Reload systemd
 
 - name: OS - Enable disable-thp service
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: disable-thp.service
     enabled: true
     state: started

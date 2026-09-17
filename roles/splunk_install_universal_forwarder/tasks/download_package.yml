@@ -4,4 +4,6 @@
     url: https://download.splunk.com/products/universalforwarder/releases/{{ splunk_uf_version }}/linux/{{
       splunk_uf_package }}
     dest: "{{ splunk_uf_download_location }}/{{ splunk_uf_package }}"
+    owner: "{{ splunk_uf_user }}"
+    group: "{{ splunk_uf_group }}"
     mode: "0644"

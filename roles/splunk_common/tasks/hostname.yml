@@ -1,4 +1,4 @@
 ---
 - name: OS - Configure system hostname
   hostname:
-    name: '{{ inventory_hostname  }}'
+    name: "{{ inventory_hostname  }}"

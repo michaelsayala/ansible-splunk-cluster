@@ -5,7 +5,7 @@
     state: directory
     owner: "{{ splunk_user }}"
     group: "{{ splunk_group }}"
-    mode: '0755'
+    mode: "0755"
 
 - name: Splunk - Configure administrator credentials (user-seed)
   ansible.builtin.template:
@@ -13,7 +13,7 @@
     dest: "{{ splunk_home }}/etc/system/local/user-seed.conf"
     owner: "{{ splunk_user }}"
     group: "{{ splunk_group }}"
-    mode: '0600'
+    mode: "0600"
   no_log: true
   notify:
     - Restart Splunk

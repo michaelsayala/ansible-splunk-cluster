@@ -3,8 +3,8 @@
   ansible.builtin.template:
     src: inputs.conf.j2
     dest: "{{ splunk_home }}/etc/system/local/inputs.conf"
-    owner: splunk
-    group: splunk
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
     mode: "0644"
   notify:
     - Restart Splunk

@@ -2,7 +2,7 @@
 - name: Search Head Cluster - Configure indexer cluster connection
   ansible.builtin.blockinfile:
     path: "{{ splunk_home }}/etc/system/local/server.conf"
-    marker: "# {mark} ANSIBLE MANAGED INDEXER CLUSTER"
+    marker: "# {mark} ANSIBLE MANAGED - INDEXER CLUSTER CONNECTION"
     block: "{{ lookup('template', 'server.conf.j2') }}"
     owner: "{{ splunk_user }}"
     group: "{{ splunk_group }}"
