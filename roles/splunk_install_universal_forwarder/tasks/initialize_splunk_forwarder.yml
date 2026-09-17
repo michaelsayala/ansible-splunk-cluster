@@ -1,0 +1,51 @@
+---
+- name: Universal Forwarder - Check installation
+  ansible.builtin.stat:
+    path: "{{ splunk_uf_home }}/bin/splunk"
+  register: splunk_uf_binary
+
+- name: Universal Forwarder - Extract package
+  ansible.builtin.unarchive:
+    src: "{{ splunk_uf_download_location }}/{{ splunk_uf_package }}"
+    dest: "/opt"
+    remote_src: true
+    owner: "{{ splunk_uf_user }}"
+    group: "{{ splunk_uf_group }}"
+  when: not splunk_uf_binary.stat.exists
+
+- name: Universal Forwarder - Set ownership
+  ansible.builtin.file:
+    path: "{{ splunk_uf_home }}"
+    owner: "{{ splunk_uf_user }}"
+    group: "{{ splunk_uf_group }}"
+    recurse: true
+
+- name: Universal Forwarder - Configure administrator credentials (user-seed)
+  ansible.builtin.template:
+    src: user-seed.conf.j2
+    dest: "{{ splunk_uf_home }}/etc/system/local/user-seed.conf"
+    owner: "{{ splunk_uf_user }}"
+    group: "{{ splunk_uf_group }}"
+    mode: '0600'
+  notify:
+    - Restart Universal Forwarder
+
+- name: Splunk - Check systemd service existence
+  ansible.builtin.stat:
+    path: /etc/systemd/system/SplunkForwarder.service
+  register: splunk_uf_service
+
+- name: Universal Forwarder - Start service and accept license
+  ansible.builtin.command: >
+    {{ splunk_uf_home }}/bin/splunk start
+    --accept-license
+    --answer-yes
+    --no-prompt
+  become: true
+  when: not splunk_uf_service.stat.exists
+
+- name: Universal Forwarder - Stop service after initialization
+  ansible.builtin.command: >
+    {{ splunk_uf_home }}/bin/splunk stop
+  become: true
+  when: not splunk_uf_service.stat.exists

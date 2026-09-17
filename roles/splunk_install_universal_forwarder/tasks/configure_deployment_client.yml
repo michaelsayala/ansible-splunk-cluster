@@ -1,0 +1,18 @@
+---
+- name: Universal Forwarder - Create system local directory
+  ansible.builtin.file:
+    path: "{{ splunk_uf_home }}/etc/system/local"
+    state: directory
+    owner: "{{ splunk_uf_user }}"
+    group: "{{ splunk_uf_group }}"
+    mode: "0755"
+
+- name: Universal Forwarder - Configure Deployment Client
+  ansible.builtin.template:
+    src: deploymentclient.conf.j2
+    dest: "{{ splunk_uf_home }}/etc/system/local/deploymentclient.conf"
+    owner: "{{ splunk_uf_user }}"
+    group: "{{ splunk_uf_group }}"
+    mode: "0644"
+  notify:
+    - Restart Universal Forwarder
