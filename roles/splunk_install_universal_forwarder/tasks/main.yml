@@ -8,6 +8,7 @@
     name: splunk_common
     tasks_from: configure_hostname.yml
 - import_tasks: download_package.yml
+- import_tasks: extract_package.yml
 - import_tasks: create_user.yml
 - import_tasks: initialize_splunk_forwarder.yml
 - import_tasks: enable-boot-start.yml
