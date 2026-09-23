@@ -665,26 +665,3 @@ Potential improvements include:
 * More granular firewall rules
 * Automated certificate distribution
 * Automated Splunk service health validation
-
----
-
-## License
-
-This project is licensed under the MIT License.
-
-See the [LICENSE](LICENSE) file for the full license text.
----
-
-# Author
-
-Michael Ayala
-
-Splunk Engineer | Infrastructure Automation | Cloud | Security
-
-GitHub:
-
-https://github.com/michaelsayala
-
-Repository:
-
-https://github.com/michaelsayala/ansible-splunk-cluster
